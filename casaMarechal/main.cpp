@@ -51,7 +51,7 @@ void DesenhaParedes(void)
 		glColor3ub(196,210,184);
 	//glColor3ub(196,210,184);
 
-	// Parede dos fundos
+	// Paredes
 	glPushMatrix();
 	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
@@ -65,7 +65,7 @@ void DesenhaParedes(void)
 	glTranslatef(14.05,150,-405.6);
 	//glScalef(0.098,0.098,0.098);
 	glRotated(angle_door,0,1,0);
-	glTranslatef(-x_trans_angle,0,z_trans_angle);
+	glTranslatef(x_trans_angle,0,z_trans_angle);
 	DesenhaObjetoNoTex(porta);
 	glPopMatrix();
 
@@ -89,44 +89,73 @@ void DesenhaParedes(void)
 	DesenhaObjetoNoTex(janela);
 	glPopMatrix();
 
+	// Janela 3
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glTranslatef(13.8,150.95,-407.55);
+	glScalef(0.65,0.58,0.69);
+	glRotated(-angle_window,0,1,0);
+	glTranslatef(x_window_angle,0,z_window_angle);
+	DesenhaObjetoNoTex(janela);
+	glPopMatrix();
+
+	// Janela 4
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glTranslatef(13.85,150.95,-409.50);
+	glScalef(0.65,0.58,0.69);
+	glRotated(-angle_window,0,1,0);
+	glTranslatef(x_window_angle,0,z_window_angle);
+	DesenhaObjetoNoTex(janela);
+	glPopMatrix();
+
 	// Mesa
 	glPushMatrix();
 	glColor3ub(150,75,0);
-	glTranslatef(5,150.1,-401);
+	glTranslatef(5,150.1,-409.5);
 	glScalef(0.098,0.098,0.098);
 	DesenhaObjetoNoTex(mesa);
 	glPopMatrix();
 
 	// Cadeira 1
 	glPushMatrix();
-	glTranslatef(5.1,149.7,-401.7);
+	glTranslatef(5.1,149.7,-410.2);
 	glRotatef(180,0,1,0);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cadeira 2
 	glPushMatrix();
-	glTranslatef(5.8,149.7,-401);
+	glTranslatef(5.8,149.7,-409.5);
 	glRotatef(90,0,1,0);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cadeira 3
 	glPushMatrix();
-	glTranslatef(4.3,149.7,-401);
+	glTranslatef(4.3,149.7,-409.5);
 	glRotatef(270,0,1,0);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cadeira 4
 	glPushMatrix();
-	glTranslatef(5.1,149.7,-400.5);
+	glTranslatef(5.1,149.7,-409);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cama
 	glPushMatrix();
-	glTranslatef(-3,149.7,-408.5);
+	glTranslatef(-3,149.7,-401.5);
+	glRotatef(180,0,1,0);
+	glScalef(0.015,0.015,0.015);
+	DesenhaObjetoNoTex(cama);
+	glPopMatrix();
+
+	// Cama 2
+	glPushMatrix();
+	glTranslatef(0.3,149.7,-401.5);
+	glRotatef(180,0,1,0);
 	glScalef(0.015,0.015,0.015);
 	DesenhaObjetoNoTex(cama);
 	glPopMatrix();
@@ -198,16 +227,16 @@ void Teclado(unsigned char key, int x, int y)
 	{
 		case 'n':	
 					if(angle_door < ANGLE_DOOR_MAX){
-						angle_door = angle_door + 3.5;
-						x_trans_angle = x_trans_angle + 0.04;
-						z_trans_angle = z_trans_angle - 0.03;
+						angle_door = angle_door + 3.8;
+						x_trans_angle = x_trans_angle + 0.045;
+						z_trans_angle = z_trans_angle - 0.035;
 					}
 					break;
 		case 'm':	
 					if(angle_door > 0){
-						angle_door = angle_door - 3.5;
-						x_trans_angle = x_trans_angle - 0.04;
-						z_trans_angle = z_trans_angle + 0.03;
+						angle_door = angle_door - 3.8;
+						x_trans_angle = x_trans_angle - 0.045;
+						z_trans_angle = z_trans_angle + 0.035;
 					}
 					break;
 		case 'y':	
