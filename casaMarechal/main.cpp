@@ -25,10 +25,19 @@ GLint modo = GL_MODULATE;
 // Define modo de desenho inicial: textura
 char modo_des = 't';
 
-OBJnotex *paredes, *mesa, *cadeira, *cama;
+// Variaveis para controle da porta
+#define ANGLE_DOOR_MAX 60
+#define ANGLE_WINDOW_MAX 90
+#define X_LIM_DOOR 10
+#define Z_LIM_DOOR -10
+#define XY_ONE_ANGLE 5
+GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
+GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
-GLfloat rotX=0, rotY=0, rotX_ini, rotY_ini;
-GLfloat obsX=26.5, obsY=150, obsZ=-380, obsY_ini;
+OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela;
+
+GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
+GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
 int x_ini,y_ini,bot;
 
 void SetaEscalaTextura(float x,float y)
@@ -62,55 +71,65 @@ void DesenhaParedes(void)
 	DesenhaObjetoNoTex(paredes);
 	glPopMatrix();
 
+	// Porta
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glTranslatef(14.05,150,-405.6);
+	//glScalef(0.098,0.098,0.098);
+	glRotated(angle_door,0,1,0);
+	glTranslatef(-x_trans_angle,0,z_trans_angle);
+	DesenhaObjetoNoTex(porta);
+	glPopMatrix();
+
+	// Janela 1
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glTranslatef(13.8,150.95,-403.45);
+	glScalef(0.65,0.58,0.65);
+	glRotated(-angle_window,0,1,0);
+	glTranslatef(x_window_angle,0,z_window_angle);
+	DesenhaObjetoNoTex(janela);
+	glPopMatrix();
+
 	// Mesa
 	glPushMatrix();
+	glColor3ub(150,75,0);
 	glTranslatef(5,150.1,-401);
 	glScalef(0.098,0.098,0.098);
-	//paredes->textura = parede->texid;
 	DesenhaObjetoNoTex(mesa);
 	glPopMatrix();
 
 	// Cadeira 1
 	glPushMatrix();
 	glTranslatef(5.1,149.7,-401.7);
-	glScalef(0.003,0.003,0.003);
-	//paredes->textura = parede->texid;
+	glRotatef(180,0,1,0);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cadeira 2
 	glPushMatrix();
 	glTranslatef(5.8,149.7,-401);
-	glRotatef(-90,0,1,0);
-	glScalef(0.003,0.003,0.003);
-	//paredes->textura = parede->texid;
+	glRotatef(90,0,1,0);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cadeira 3
 	glPushMatrix();
 	glTranslatef(4.3,149.7,-401);
-	glRotatef(90,0,1,0);
-	glScalef(0.003,0.003,0.003);
-	//paredes->textura = parede->texid;
+	glRotatef(270,0,1,0);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cadeira 4
 	glPushMatrix();
-	glTranslatef(4.2,149.7,-401);
-	glRotatef(270,0,1,0);
-	glScalef(0.003,0.003,0.003);
-	//paredes->textura = parede->texid;
+	glTranslatef(5.1,149.7,-400.5);
 	DesenhaObjetoNoTex(cadeira);
 	glPopMatrix();
 
 	// Cama
 	glPushMatrix();
-	glTranslatef(4.2,149.7,-410);
-	glRotatef(270,0,1,0);
-	glScalef(0.003,0.003,0.003);
-	//paredes->textura = parede->texid;
+	glTranslatef(-3,149.7,-408.5);
+	glScalef(0.015,0.015,0.015);
 	DesenhaObjetoNoTex(cama);
 	glPopMatrix();
 }
@@ -172,6 +191,46 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 	EspecificaParametrosVisualizacao();
 }
 
+// Funcao callback para eventos de teclado
+void Teclado(unsigned char key, int x, int y)
+{
+
+	// Trata as diversas teclas
+	switch(key)
+	{
+		case 'n':	
+					if(angle_door < ANGLE_DOOR_MAX){
+						angle_door = angle_door + 3.5;
+						x_trans_angle = x_trans_angle + 0.04;
+						z_trans_angle = z_trans_angle - 0.03;
+					}
+					break;
+		case 'm':	
+					if(angle_door > 0){
+						angle_door = angle_door - 3.5;
+						x_trans_angle = x_trans_angle - 0.04;
+						z_trans_angle = z_trans_angle + 0.03;
+					}
+					break;
+		case 'y':	
+					if(angle_window < ANGLE_WINDOW_MAX){
+						angle_window = angle_window + 3.5;
+						x_window_angle = x_window_angle + 0.018;
+						z_window_angle = z_window_angle + 0.035;
+					}
+					break;
+		case 'u':	
+					if(angle_window > 0){
+						angle_window = angle_window - 3.5;
+						x_window_angle = x_window_angle - 0.018;
+						z_window_angle = z_window_angle - 0.035;
+					}
+					break;
+	}
+	// Na próxima iteração por meio de glutMainLoop essa janela será exibida novamente
+	glutPostRedisplay();
+}
+
 void TecladoEspecial(int key, int x, int y)
 {
 	float sina, cosa, sina_01, cosa_01;
@@ -179,13 +238,13 @@ void TecladoEspecial(int key, int x, int y)
 	// Pre-calcula o seno e cosseno do angulo
 	// de direcao atual + 90 graus, ou seja,
 	// a direcao para deslocamento lateral
-	sina = 4*sin((rotY+90)*M_PI/180.0);
-	cosa = 4*cos((rotY+90)*M_PI/180.0);
+	sina = 0.5*sin((rotY+90)*M_PI/180.0);
+	cosa = 0.25*cos((rotY+90)*M_PI/180.0);
 
 	// Pre-calcula o seno e cosseno do angulo
 	// sem os 90 graus
-	sina_01 = 4*sin(rotY*M_PI/180.0);
-	cosa_01 = 4*cos(rotY*M_PI/180.0);
+	sina_01 = 0.25*sin(rotY*M_PI/180.0);
+	cosa_01 = 0.25*cos(rotY*M_PI/180.0);
 
 	// Trata as teclas especiais
 	switch(key)
@@ -194,8 +253,6 @@ void TecladoEspecial(int key, int x, int y)
 		case GLUT_KEY_LEFT:		
 							obsX = obsX - sina;
 							obsZ = obsZ + cosa;
-							printf("%f", obsX);
-							printf("\n");
 							break;
 		case GLUT_KEY_RIGHT:	
 							obsX = obsX + sina;
@@ -293,9 +350,11 @@ void Inicializa(void)
 
 	// Carrega objetos
 	paredes = CarregaObjetoNoTex("obj/paredes.obj", false);
-	mesa = CarregaObjetoNoTex("obj/table.obj", false);
-	cadeira = CarregaObjetoNoTex("obj/CHAIR.obj", false);
-	cama = CarregaObjetoNoTex("obj/bed.obj", false);
+	mesa = CarregaObjetoNoTex("obj/mesa.obj", false);
+	cadeira = CarregaObjetoNoTex("obj/cadeira.obj", false);
+	cama = CarregaObjetoNoTex("obj/cama.obj", false);
+	porta = CarregaObjetoNoTex("obj/porta.obj", false);
+	janela = CarregaObjetoNoTex("obj/porta.obj", false);
 
 	SetaModoDesenho(modo_des);
 }
@@ -321,6 +380,9 @@ int main(int argc, char** argv)
 
 	// Registra a funcao callback de redesenho da janela de visualizacao
 	glutDisplayFunc(Desenha);
+
+	// Registra a funcao callback de teclado
+	glutKeyboardFunc(Teclado);
 
 	// Registra a funcao callback de teclas especiais
 	glutSpecialFunc(TecladoEspecial);
