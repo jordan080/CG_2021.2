@@ -7,8 +7,6 @@
 #include <string.h>
 #include <unistd.h>
 
-TEX *parede; 
-
 // Filtros de textura
 GLint filtros[] = {
        GL_NEAREST, GL_LINEAR,
@@ -40,22 +38,12 @@ GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
 GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
 int x_ini,y_ini,bot;
 
-void SetaEscalaTextura(float x,float y)
-{
-	glMatrixMode(GL_TEXTURE);
-	glLoadIdentity();
-	glScalef(x,y,1);
-	glMatrixMode(GL_MODELVIEW);
-}
-
 // Variaveis para controle da projecao
 GLfloat fAspect;
 GLfloat ang_cam = 60;
 
 void DesenhaParedes(void)
 {	
-
-	SetaEscalaTextura(6,3);
 
 	if(modo_des=='t')
 		glColor3f(1,1,1);
@@ -65,9 +53,9 @@ void DesenhaParedes(void)
 
 	// Parede dos fundos
 	glPushMatrix();
+	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
 	//glScalef(6,3,1);
-	paredes->textura = parede->texid;
 	DesenhaObjetoNoTex(paredes);
 	glPopMatrix();
 
@@ -85,6 +73,16 @@ void DesenhaParedes(void)
 	glPushMatrix();
 	glColor3ub(0,0,255);
 	glTranslatef(13.8,150.95,-403.45);
+	glScalef(0.65,0.58,0.65);
+	glRotated(-angle_window,0,1,0);
+	glTranslatef(x_window_angle,0,z_window_angle);
+	DesenhaObjetoNoTex(janela);
+	glPopMatrix();
+
+	// Janela 2
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glTranslatef(13.8,150.95,-401.65);
 	glScalef(0.65,0.58,0.65);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
@@ -320,8 +318,6 @@ void Inicializa(void)
 	// Define a cor de fundo da janela de visualizacao como preto
 	glClearColor(0,0,0,1);
 
-	parede = CarregaTextura("texturas/parede.jpg", true);
-
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, modo);
 
 	// Define coeficientes ambiente e difuso
@@ -355,8 +351,6 @@ void Inicializa(void)
 	cama = CarregaObjetoNoTex("obj/cama.obj", false);
 	porta = CarregaObjetoNoTex("obj/porta.obj", false);
 	janela = CarregaObjetoNoTex("obj/porta.obj", false);
-
-	SetaModoDesenho(modo_des);
 }
 
 // Programa Principal
