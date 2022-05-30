@@ -60,31 +60,8 @@ typedef struct {
 	GLfloat spec;	
 } MATnotex;
 
-
-void NormalizaNoTex(VERTnotex &norm);
-void ProdutoVetorialNoTex(VERTnotex &v1, VERTnotex &v2, VERTnotex &vresult);
-void VetorNormalNoTex(VERTnotex vert1, VERTnotex vert2, VERTnotex vert3, VERTnotex &n);
-void RotaZNoTex(VERTnotex &in, VERTnotex &out, float ang);
-void RotaYNoTex(VERTnotex &in, VERTnotex &out, float ang);
-void RotaXNoTex(VERTnotex &in, VERTnotex &out, float ang);
-
 OBJnotex *CarregaObjetoNoTex(char *nomeArquivo, bool mipmap);
-void CriaDisplayListNoTex(OBJnotex *obj);
-void DesabilitaDisplayListNoTex(OBJnotex *ptr);
 void DesenhaObjetoNoTex(OBJnotex *obj);
-void SetaModoDesenhoNoTex(char modo);
-
-void LiberaObjetoNoTex(OBJnotex *obj);
-void LiberaMateriaisNoTex();
-
-
-float CalculaQPSNoTex(void);
-void Escreve2DNoTex(float x, float y, char *str);
-
-void CalculaNormaisPorFaceNoTex(OBJnotex *obj);
-
-void SetaFiltroTexturaNoTex(GLint tex, GLint filtromin, GLint filtromag);
-MATnotex *ProcuraMaterialNoTex(char *nome);
 
 #ifndef GL_ARB_texture_cube_map
 # define GL_NORMAL_MAP					0x8511
