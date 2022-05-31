@@ -345,22 +345,6 @@ void Inicializa(void)
 {
 	// Define a cor de fundo da janela de visualizacao como preto
 	glClearColor(0,0,0,1);
-
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, modo);
-
-	// Define coeficientes ambiente e difuso
-	// do material
-	GLfloat matAmb[4] = { 0.2,0.2,0.2,1 };
-	GLfloat matDif[4] = { 1,1,1,1 };
-
-	// Material
-	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,matAmb);
-	glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,matDif);
-
-	// Seleciona o modo de GL_COLOR_MATERIAL
-	// faz com que uma cor de material acompanhe a cor atual
-	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-	glEnable(GL_COLOR_MATERIAL);
 	
 	// Habilita normalizacao automatica
 	// Vetores normais sao normalizados para valores unitarios
