@@ -1,11 +1,10 @@
 #include <GL/glut.h>
 #include <math.h>
-#include "bibutilNoTex.h"
-#include "bibutil.h"
 #include <vector>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include "utils.h"
 
 // Filtros de textura
 GLint filtros[] = {
@@ -42,7 +41,7 @@ int x_ini,y_ini,bot;
 GLfloat fAspect;
 GLfloat ang_cam = 60;
 
-void DesenhaParedes(void)
+void CriaObjetos(void)
 {	
 
 	if(modo_des=='t')
@@ -56,7 +55,7 @@ void DesenhaParedes(void)
 	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
 	//glScalef(6,3,1);
-	DesenhaObjetoNoTex(paredes);
+	DesenhaObjeto(paredes);
 	glPopMatrix();
 
 	// Porta
@@ -66,7 +65,7 @@ void DesenhaParedes(void)
 	//glScalef(0.098,0.098,0.098);
 	glRotated(angle_door,0,1,0);
 	glTranslatef(x_trans_angle,0,z_trans_angle);
-	DesenhaObjetoNoTex(porta);
+	DesenhaObjeto(porta);
 	glPopMatrix();
 
 	// Janela 1
@@ -76,7 +75,7 @@ void DesenhaParedes(void)
 	glScalef(0.65,0.58,0.65);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
-	DesenhaObjetoNoTex(janela);
+	DesenhaObjeto(janela);
 	glPopMatrix();
 
 	// Janela 2
@@ -86,7 +85,7 @@ void DesenhaParedes(void)
 	glScalef(0.65,0.58,0.65);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
-	DesenhaObjetoNoTex(janela);
+	DesenhaObjeto(janela);
 	glPopMatrix();
 
 	// Janela 3
@@ -96,7 +95,7 @@ void DesenhaParedes(void)
 	glScalef(0.65,0.58,0.69);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
-	DesenhaObjetoNoTex(janela);
+	DesenhaObjeto(janela);
 	glPopMatrix();
 
 	// Janela 4
@@ -106,7 +105,7 @@ void DesenhaParedes(void)
 	glScalef(0.65,0.58,0.69);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
-	DesenhaObjetoNoTex(janela);
+	DesenhaObjeto(janela);
 	glPopMatrix();
 
 	// Mesa
@@ -114,34 +113,34 @@ void DesenhaParedes(void)
 	glColor3ub(150,75,0);
 	glTranslatef(5,150.1,-409.5);
 	glScalef(0.098,0.098,0.098);
-	DesenhaObjetoNoTex(mesa);
+	DesenhaObjeto(mesa);
 	glPopMatrix();
 
 	// Cadeira 1
 	glPushMatrix();
 	glTranslatef(5.1,149.7,-410.2);
 	glRotatef(180,0,1,0);
-	DesenhaObjetoNoTex(cadeira);
+	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 2
 	glPushMatrix();
 	glTranslatef(5.8,149.7,-409.5);
 	glRotatef(90,0,1,0);
-	DesenhaObjetoNoTex(cadeira);
+	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 3
 	glPushMatrix();
 	glTranslatef(4.3,149.7,-409.5);
 	glRotatef(270,0,1,0);
-	DesenhaObjetoNoTex(cadeira);
+	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 4
 	glPushMatrix();
 	glTranslatef(5.1,149.7,-409);
-	DesenhaObjetoNoTex(cadeira);
+	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cama
@@ -149,7 +148,7 @@ void DesenhaParedes(void)
 	glTranslatef(-3,149.7,-401.5);
 	glRotatef(180,0,1,0);
 	glScalef(0.015,0.015,0.015);
-	DesenhaObjetoNoTex(cama);
+	DesenhaObjeto(cama);
 	glPopMatrix();
 
 	// Cama 2
@@ -157,7 +156,7 @@ void DesenhaParedes(void)
 	glTranslatef(0.3,149.7,-401.5);
 	glRotatef(180,0,1,0);
 	glScalef(0.015,0.015,0.015);
-	DesenhaObjetoNoTex(cama);
+	DesenhaObjeto(cama);
 	glPopMatrix();
 }
 
@@ -180,7 +179,7 @@ void Desenha(void)
 	glEnable(GL_TEXTURE_2D);
 
 	// Desenha todos os elementos da cena
-	DesenhaParedes();
+	CriaObjetos();
 
 	// Faz a troca dos buffers
 	glutSwapBuffers();
@@ -374,12 +373,12 @@ void Inicializa(void)
 	glEnable(GL_DEPTH_TEST);
 
 	// Carrega objetos
-	paredes = CarregaObjetoNoTex("obj/paredes.obj", false);
-	mesa = CarregaObjetoNoTex("obj/mesa.obj", false);
-	cadeira = CarregaObjetoNoTex("obj/cadeira.obj", false);
-	cama = CarregaObjetoNoTex("obj/cama.obj", false);
-	porta = CarregaObjetoNoTex("obj/porta.obj", false);
-	janela = CarregaObjetoNoTex("obj/porta.obj", false);
+	paredes = CarregaObjeto("obj/paredes.obj", false);
+	mesa = CarregaObjeto("obj/mesa.obj", false);
+	cadeira = CarregaObjeto("obj/cadeira.obj", false);
+	cama = CarregaObjeto("obj/cama.obj", false);
+	porta = CarregaObjeto("obj/porta.obj", false);
+	janela = CarregaObjeto("obj/porta.obj", false);
 }
 
 // Programa Principal
