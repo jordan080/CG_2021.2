@@ -6,22 +6,6 @@
 #include <unistd.h>
 #include "utils.h"
 
-// Filtros de textura
-// GLint filtros[] = {
-//        GL_NEAREST, GL_LINEAR,
-//        GL_NEAREST_MIPMAP_NEAREST,GL_LINEAR_MIPMAP_NEAREST,
-//        GL_NEAREST_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR
-// };
-
-// // Define filtro inicial como GL_NEAREST_MIPMAP_LINEAR
-// int filtro = 4;
-
-// Define modo inicial de aplicacao da textura
-// GLint modo = GL_MODULATE;
-
-// // Define modo de desenho inicial: textura
-// char modo_des = 't';
-
 // Variaveis para controle da porta
 #define ANGLE_DOOR_MAX 60
 #define ANGLE_WINDOW_MAX 90
@@ -43,18 +27,10 @@ GLfloat ang_cam = 60;
 
 void CriaObjetos(void)
 {	
-
-	// if(modo_des=='t')
-	// 	glColor3f(1,1,1);
-	// else
-	// 	glColor3ub(196,210,184);
-	//glColor3ub(196,210,184);
-
 	// Paredes
 	glPushMatrix();
 	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
-	//glScalef(6,3,1);
 	DesenhaObjeto(paredes);
 	glPopMatrix();
 
@@ -62,7 +38,6 @@ void CriaObjetos(void)
 	glPushMatrix();
 	glColor3ub(0,0,255);
 	glTranslatef(14.05,150,-405.6);
-	//glScalef(0.098,0.098,0.098);
 	glRotated(angle_door,0,1,0);
 	glTranslatef(x_trans_angle,0,z_trans_angle);
 	DesenhaObjeto(porta);
@@ -176,7 +151,7 @@ void Desenha(void)
 	glRotatef(rotY,0,1,0);
 	glTranslatef(-obsX,-obsY,-obsZ);
 
-	//glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 
 	// Desenha todos os elementos da cena
 	CriaObjetos();
@@ -344,12 +319,12 @@ void GerenciaMovim(int x, int y)
 void Inicializa(void)
 {
 	// Define a cor de fundo da janela de visualizacao como preto
-	//glClearColor(0,0,0,1);
+	glClearColor(0,0,0,1);
 	
 	// Habilita normalizacao automatica
 	// Vetores normais sao normalizados para valores unitarios
 	// apos transformacao e antes da iluminacao
-	//glEnable(GL_NORMALIZE);
+	glEnable(GL_NORMALIZE);
 
 	// Habilita Z-Buffer
 	// Realiza comparacoes de profundidade
