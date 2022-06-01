@@ -41,8 +41,7 @@ typedef struct {
 	GLint numNormais;
 	GLint numTexcoords;
 	bool normais_por_vertice;	
-	bool tem_materiais;			
-	GLint textura;				
+	bool tem_materiais;						
 	GLint dlist;				
 	VERTnotex *vertices;
 	VERTnotex *normais;

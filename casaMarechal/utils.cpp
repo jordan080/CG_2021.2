@@ -8,7 +8,6 @@
 using namespace std;
 
 vector<OBJnotex*> _objetosNoTex(0);
-
 vector<MATnotex*> _materiaisNoTex(0);
 
 char _modoNoTex = 't';
@@ -64,7 +63,6 @@ OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap)
 	obj->numTexcoords = 0;
 	obj->normais_por_vertice = false;
 	obj->tem_materiais = false;
-	obj->textura = -1;	
 	obj->dlist = -1;	
 
 	obj->vertices = NULL;
@@ -289,14 +287,6 @@ void DesenhaObjeto(OBJnotex *obj)
 			glMaterialfv(GL_FRONT,GL_EMISSION,_materiaisNoTex[mat]->ke);
 			glMaterialf(GL_FRONT,GL_SHININESS,_materiaisNoTex[mat]->spec);
 		}
-
-		
-		if(obj->textura != -1)
-			texid = obj->textura;
-		else
-			
-			texid = obj->faces[i].texid;
-
 		
 		if(texid == -1 && ult_texid != -1)
 			glDisable(GL_TEXTURE_2D);
