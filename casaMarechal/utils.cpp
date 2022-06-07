@@ -7,8 +7,8 @@
 
 using namespace std;
 
-vector<OBJnotex*> _objetosNoTex(0);
-vector<MATnotex*> _materiaisNoTex(0);
+vector<OBJnotex*> _objetos(0);
+vector<MATnotex*> _materiais(0);
 
 char _modoNoTex = 't';
 
@@ -38,16 +38,13 @@ OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap)
 	
 	int i;
 	int vcont,ncont,fcont,tcont;
-	int material, texid;
+	int material;
 	char aux[256];
 	TEXnotex *ptr;
 	FILE *fp;
 	OBJnotex *obj;
 
 	fp = fopen(nomeArquivo, "r");  
-
-#ifdef DEBUG
-#endif
 
 	if(fp == NULL){
           return NULL;
@@ -85,9 +82,6 @@ OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap)
 
 	rewind(fp);
 
-#ifdef DEBUG
-#endif
-
 	
 	if ( ( obj->vertices = (VERTnotex *) malloc((sizeof(VERTnotex)) * obj->numVertices) ) == NULL ){
 		return NULL;
@@ -115,7 +109,6 @@ OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap)
 	tcont = 0;
 	fcont = 0;
 	material = -1;
-	texid = -1;
 
 	
 	float minx,miny,minz;
@@ -174,7 +167,6 @@ OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap)
 
 			obj->faces[fcont].mat = material;
 
-			obj->faces[fcont].texid = texid;
 			int vi[10],ti[10],ni[10];
 			char sep;
 			obj->faces[fcont].nv = 0;
@@ -213,22 +205,18 @@ OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap)
 			obj->faces[fcont].vert = (int *) malloc(sizeof(int)*nv);
 			if(tem_n) obj->faces[fcont].norm = (int *) malloc(sizeof(int)*nv);
 				else obj->faces[fcont].norm = NULL;
-			if(tem_t) obj->faces[fcont].tex  = (int *) malloc(sizeof(int)*nv);
-				else obj->faces[fcont].tex = NULL;
 			for(i=0;i<nv;++i)
 			{
 
 				obj->faces[fcont].vert[i] = vi[i]-1;
 				if(tem_n) obj->faces[fcont].norm[i] = ni[i]-1;
-				if(tem_t) obj->faces[fcont].tex[i]  = ti[i]-1;
 			}
 			fcont++;
 		}
 	}
-#ifdef DEBUG
-#endif
+
 	fclose(fp);
-	_objetosNoTex.push_back(obj);
+	_objetos.push_back(obj);
 	return obj;
 }
 
@@ -236,7 +224,6 @@ void DesenhaObjeto(OBJnotex *obj)
 {	
 	
 	int i;	
-	GLint ult_texid, texid;	
 	GLenum prim = GL_POLYGON;	
 
 	GLfloat branco[4] = { 1.0, 1.0, 1.0, 1.0 };	
@@ -263,7 +250,6 @@ void DesenhaObjeto(OBJnotex *obj)
 		glDisable(GL_COLOR_MATERIAL);
 
 	
-	ult_texid = -1;
 	
 	for(i=0; i<obj->numFaces; i++)
 	{
@@ -276,26 +262,15 @@ void DesenhaObjeto(OBJnotex *obj)
 		{
 			
 			int mat = obj->faces[i].mat;
-			glMaterialfv(GL_FRONT,GL_AMBIENT,_materiaisNoTex[mat]->ka);
+			glMaterialfv(GL_FRONT,GL_AMBIENT,_materiais[mat]->ka);
 			
-			
-			if(obj->faces[i].texid != -1 && _modoNoTex=='t')
-				glMaterialfv(GL_FRONT,GL_DIFFUSE,branco);
-			else
-				glMaterialfv(GL_FRONT,GL_DIFFUSE,_materiaisNoTex[mat]->kd);
-			glMaterialfv(GL_FRONT,GL_SPECULAR,_materiaisNoTex[mat]->ks);
-			glMaterialfv(GL_FRONT,GL_EMISSION,_materiaisNoTex[mat]->ke);
-			glMaterialf(GL_FRONT,GL_SHININESS,_materiaisNoTex[mat]->spec);
+
+				glMaterialfv(GL_FRONT,GL_DIFFUSE,_materiais[mat]->kd);
+			glMaterialfv(GL_FRONT,GL_SPECULAR,_materiais[mat]->ks);
+			glMaterialfv(GL_FRONT,GL_EMISSION,_materiais[mat]->ke);
+			glMaterialf(GL_FRONT,GL_SHININESS,_materiais[mat]->spec);
 		}
 		
-		if(texid == -1 && ult_texid != -1)
-			glDisable(GL_TEXTURE_2D);
-
-		if (texid != -1 && texid != ult_texid && _modoNoTex=='t')
-		{
-		       glEnable(GL_TEXTURE_2D);
-		       glBindTexture(GL_TEXTURE_2D,texid);
-		}
 
 		glBegin(prim);
 
@@ -307,9 +282,6 @@ void DesenhaObjeto(OBJnotex *obj)
 				obj->normais[obj->faces[i].norm[vf]].y,
 				obj->normais[obj->faces[i].norm[vf]].z);
 
-			if(texid!=-1)
-				glTexCoord2f(obj->texcoords[obj->faces[i].tex[vf]].s,
-				obj->texcoords[obj->faces[i].tex[vf]].t);
 
 			glVertex3f(obj->vertices[obj->faces[i].vert[vf]].x,
 		    	obj->vertices[obj->faces[i].vert[vf]].y,
@@ -318,8 +290,6 @@ void DesenhaObjeto(OBJnotex *obj)
 
 		glEnd();
 
-
-		ult_texid = texid;
 	} 
 	
 	glDisable(GL_TEXTURE_2D);

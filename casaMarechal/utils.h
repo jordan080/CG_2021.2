@@ -13,8 +13,7 @@ typedef struct
 	char nome[50];			
 	int ncomp;				
 	GLint dimx;				
-	GLint dimy;				
-	GLuint texid;			
+	GLint dimy;						
 	unsigned char *data;	
 } TEXnotex;
 
@@ -25,10 +24,8 @@ typedef struct {
 typedef struct {
 	GLint nv;		
 	GLint *vert;	
-	GLint *norm;	
-	GLint *tex;		
+	GLint *norm;		
 	GLint mat;		
-	GLint texid;	
 } FACEnotex;
 
 typedef struct {

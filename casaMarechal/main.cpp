@@ -294,7 +294,7 @@ void GerenciaMouse(int button, int state, int x, int y)
 
 void GerenciaMovim(int x, int y)
 {
-	// Botao esquerdo ?
+	// Botao esquerdo 
 	if(bot==GLUT_LEFT_BUTTON)
 	{
 		// Calcula diferencas
@@ -304,7 +304,7 @@ void GerenciaMovim(int x, int y)
 		rotY = rotY_ini - deltax/SENS_ROT;
 		rotX = rotX_ini - deltay/SENS_ROT;
 	}
-	// Botao direito ?
+	// Botao direito 
 	else if(bot==GLUT_RIGHT_BUTTON)
 	{
 		// Calcula diferenca
@@ -319,12 +319,7 @@ void GerenciaMovim(int x, int y)
 void Inicializa(void)
 {
 	// Define a cor de fundo da janela de visualizacao como preto
-	glClearColor(0,0,0,1);
-	
-	// Habilita normalizacao automatica
-	// Vetores normais sao normalizados para valores unitarios
-	// apos transformacao e antes da iluminacao
-	glEnable(GL_NORMALIZE);
+	glClearColor(0,0,0,1);	
 
 	// Habilita Z-Buffer
 	// Realiza comparacoes de profundidade
