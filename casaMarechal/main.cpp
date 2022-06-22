@@ -15,7 +15,7 @@
 GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
-OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela;
+OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira, *mesa_grande;
 
 GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
 GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
@@ -86,37 +86,56 @@ void CriaObjetos(void)
 	// Mesa
 	glPushMatrix();
 	glColor3ub(150,75,0);
-	glTranslatef(5,150.1,-409.5);
+	glTranslatef(5,150.1,-408.5);
 	glScalef(0.098,0.098,0.098);
 	DesenhaObjeto(mesa);
 	glPopMatrix();
 
-	// Cadeira 1
+	// glPushMatrix();
+	// glTranslatef(5.1,149.7,-409.2);
+	// glRotatef(180,0,1,0);
+	// DesenhaObjeto(cadeira);
+	// glPopMatrix();
+	//Cadeira 1
 	glPushMatrix();
-	glTranslatef(5.1,149.7,-410.2);
-	glRotatef(180,0,1,0);
+	glTranslatef(5.5,149.7,-407);
+	DesenhaObjeto(cadeira);
+	glPopMatrix();
+
+	// Cadeira 1.1
+	glPushMatrix();
+	glTranslatef(4.5,149.7,-407);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 2
 	glPushMatrix();
-	glTranslatef(5.8,149.7,-409.5);
+	glTranslatef(6.5,149.7,-408);
+	glRotatef(90,0,1,0);
+	DesenhaObjeto(cadeira);
+	glPopMatrix();
+
+	// Cadeira 2.1
+	glPushMatrix();
+	glTranslatef(6.5,149.7,-408.8);
 	glRotatef(90,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 3
 	glPushMatrix();
-	glTranslatef(4.3,149.7,-409.5);
+	glTranslatef(3.6,149.7,-408);
 	glRotatef(270,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
-	// Cadeira 4
+	// Cadeira 3.1
 	glPushMatrix();
-	glTranslatef(5.1,149.7,-409);
+	glTranslatef(3.6,149.7,-408.8);
+	glRotatef(270,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
+	
 
 	// Cama
 	glPushMatrix();
@@ -133,6 +152,60 @@ void CriaObjetos(void)
 	glScalef(0.015,0.015,0.015);
 	DesenhaObjeto(cama);
 	glPopMatrix();
+
+	//mesa de cabeceira
+	glPushMatrix();
+	glTranslatef(-1.3,149.7,-400.4);
+	//glRotatef(180,0,1,0);
+	glScalef(0.3,0.3,0.3);
+	DesenhaObjeto(mesa_cabeceira);
+	glPopMatrix();
+
+	// banco
+	glPushMatrix();
+	glTranslatef(5.1,149.7,-410);
+	glRotatef(180,0,1,0);
+	DesenhaObjeto(banco);
+	glPopMatrix();
+
+	//mesinha 1
+	glPushMatrix();
+	glTranslatef(7.2,149.7,-410);
+	glRotatef(180,0,1,0);
+	glScalef(0.3,0.3,0.3);
+	DesenhaObjeto(mesa_cabeceira);
+	glPopMatrix();
+
+	//mesinha 2
+	glPushMatrix();
+	glTranslatef(3.0,149.7,-410);
+	glRotatef(180,0,1,0);
+	glScalef(0.3,0.3,0.3);
+	DesenhaObjeto(mesa_cabeceira);
+	glPopMatrix();
+
+	// mesa grande
+	glPushMatrix();
+	glTranslatef(-2.8,149.7,-407.8);
+	glRotatef(90,0,1,0);
+	glScalef(0.16,0.16,0.16);
+	DesenhaObjeto(mesa_grande);
+	glPopMatrix();
+
+	// Cadeira 4
+	glPushMatrix();
+	glTranslatef(-2.8,149.7,-408.8);
+	glRotatef(180,0,1,0);
+	DesenhaObjeto(cadeira);
+	glPopMatrix();
+
+	// Cadeira 4.1
+	glPushMatrix();
+	glTranslatef(-2.8,149.7,-406.8);
+	//glRotatef(90,0,1,0);
+	DesenhaObjeto(cadeira);
+	glPopMatrix();
+
 }
 
 // Desenha toda a cena
@@ -333,6 +406,10 @@ void Inicializa(void)
 	cama = CarregaObjeto("obj/cama.obj", false);
 	porta = CarregaObjeto("obj/porta.obj", false);
 	janela = CarregaObjeto("obj/porta.obj", false);
+	banco = CarregaObjeto("obj/oldbench1.obj", false);
+	//cadeira_2 = CarregaObjeto("obj/cadeira2.obj", false);
+	mesa_cabeceira = CarregaObjeto("obj/mesa_cabeceira.obj", false);
+	mesa_grande = CarregaObjeto("obj/mesa_grande.obj", false);
 }
 
 // Programa Principal
