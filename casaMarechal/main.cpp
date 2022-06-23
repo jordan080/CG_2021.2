@@ -15,7 +15,38 @@
 GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
-OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela;
+OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *lampada;
+
+// Luminosidade base de uma lampada
+#define LOW	0.4
+
+// Define parametros de iluminacao
+// Luz 1: puntual no teto, frente
+GLfloat luzAmb1[4] = {0.001, 0.001, 0.001, 1.0};	// luz ambiente
+GLfloat luzDif1[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat luzEsp1[4] = {0.0, 0.0, 0.0, 1.0};	// luz especular
+GLfloat posLuz1[4] = {8,170,-405.5, 1.0};	// posicao da fonte de luz
+
+// Luz 2: puntual no teto, meio da sala
+GLfloat luzDif2[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz2[4] = {0, 200, 0, 1};		// posicao da fonte de luz
+
+// Luz 3: puntual no teto, atras
+GLfloat luzDif3[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz3[4] = {0, 200, -250, 1};		// posicao da fonte de luz
+
+// Luz 4: direcional, simulando o Sol no chão
+GLfloat luzDif4[4] = {0.4, 0.2, 0.0, 1.0};	// luz difusa
+GLfloat posLuz4[4] = {-1, 0.4 , 0, 0};		// direcao da fonte de luz
+
+// Luz spot da luminaria
+GLfloat luzAmbSpot[4]= {0.2, 0.2, 0.2, 1.0};
+GLfloat posLuzSpot[4] = {260, 120, 65, 1};
+GLfloat dirLuzSpot[3] = {0, -1, 0};
+GLfloat luzDifusaSpot[4] = {1, 1, 1, 1};
+GLfloat luzEspecSpot[4] = {0, 0, 0, 1};
+
+bool luzes[6] = {true, true, true, false, false};
 
 GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
 GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
@@ -32,6 +63,15 @@ void CriaObjetos(void)
 	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
 	DesenhaObjeto(paredes);
+	glPopMatrix();
+
+	//Lampada 1
+	glPushMatrix();
+	//glColor3ub(0,0,255);
+	glTranslatef(11.8,153.2,-403.45);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	DesenhaObjeto(lampada);
 	glPopMatrix();
 
 	// Porta
@@ -153,6 +193,10 @@ void Desenha(void)
 
 	glEnable(GL_TEXTURE_2D);
 
+	// Agora posiciona a fonte de luz do meio da sala
+	// Agora posiciona demais fontes de luz
+	glLightfv(GL_LIGHT0, GL_POSITION, posLuz1);
+
 	// Desenha todos os elementos da cena
 	CriaObjetos();
 
@@ -192,6 +236,15 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 	EspecificaParametrosVisualizacao();
 }
 
+void SetaLuzes()
+{
+	for(int luz=0;luz<5;++luz)
+	{
+		if(luzes[luz]) glEnable(GL_LIGHT0+luz);
+		else glDisable(GL_LIGHT0+luz);
+	}
+}
+
 // Funcao callback para eventos de teclado
 void Teclado(unsigned char key, int x, int y)
 {
@@ -226,6 +279,14 @@ void Teclado(unsigned char key, int x, int y)
 						x_window_angle = x_window_angle - 0.018;
 						z_window_angle = z_window_angle - 0.035;
 					}
+					break;
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+					luzes[key-'1'] = !luzes[key-'1'];
+					SetaLuzes();
 					break;
 	}
 	// Na próxima iteração por meio de glutMainLoop essa janela será exibida novamente
@@ -321,18 +382,51 @@ void Inicializa(void)
 	// Define a cor de fundo da janela de visualizacao como preto
 	glClearColor(0,0,0,1);	
 
+	// Ajusta iluminacao
+	glLightfv( GL_LIGHT0, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT0, GL_DIFFUSE,  luzDif1 );
+	glLightfv( GL_LIGHT0, GL_SPECULAR, luzEsp1 );
+	
+	// Habilita todas as fontes de luz
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	glEnable(GL_LIGHT3);
+	glEnable(GL_LIGHT4);
+	glEnable(GL_LIGHTING);
+
+	// Define coeficientes ambiente e difuso
+	// do material
+	GLfloat matAmb[4] = { 0.15,0.15,0.15,1 };
+	GLfloat matDif[4] = { 0.5,0.5,0.5,0.5 };
+
+	// Material
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,matAmb);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,matDif);
+
+	// Seleciona o modo de GL_COLOR_MATERIAL
+	// faz com que uma cor de material acompanhe a cor atual
+	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+	
+	// Habilita normalizacao automatica
+	// Vetores normais sao normalizados para valores unitarios
+	// apos transformacao e antes da iluminacao
+	glEnable(GL_NORMALIZE);
+
 	// Habilita Z-Buffer
 	// Realiza comparacoes de profundidade
 	// e atualiza o buffer de profundidade
 	glEnable(GL_DEPTH_TEST);
 
 	// Carrega objetos
-	paredes = CarregaObjeto("obj/paredes.obj", false);
+	paredes = CarregaObjeto("obj/paredes2.obj", false);
 	mesa = CarregaObjeto("obj/mesa.obj", false);
 	cadeira = CarregaObjeto("obj/cadeira.obj", false);
 	cama = CarregaObjeto("obj/cama.obj", false);
 	porta = CarregaObjeto("obj/porta.obj", false);
 	janela = CarregaObjeto("obj/porta.obj", false);
+	lampada = CarregaObjeto("obj/lampada.obj", false);
 }
 
 // Programa Principal
