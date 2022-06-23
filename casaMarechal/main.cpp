@@ -15,7 +15,8 @@
 GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
-OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira, *mesa_grande;
+OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira;
+OBJnotex *mesa_grande, *enfeite_janela;
 
 GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
 GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
@@ -202,8 +203,13 @@ void CriaObjetos(void)
 	// Cadeira 4.1
 	glPushMatrix();
 	glTranslatef(-2.8,149.7,-406.8);
-	//glRotatef(90,0,1,0);
 	DesenhaObjeto(cadeira);
+	glPopMatrix();
+
+	//enfeites das janelas
+	glPushMatrix();
+	glTranslatef(0.05,150,-400.0);
+	DesenhaObjeto(enfeite_janela);
 	glPopMatrix();
 
 }
@@ -407,9 +413,9 @@ void Inicializa(void)
 	porta = CarregaObjeto("obj/porta.obj", false);
 	janela = CarregaObjeto("obj/porta.obj", false);
 	banco = CarregaObjeto("obj/oldbench1.obj", false);
-	//cadeira_2 = CarregaObjeto("obj/cadeira2.obj", false);
 	mesa_cabeceira = CarregaObjeto("obj/mesa_cabeceira.obj", false);
 	mesa_grande = CarregaObjeto("obj/mesa_grande.obj", false);
+	enfeite_janela = CarregaObjeto("obj/enfeite_janela.obj", false);
 }
 
 // Programa Principal
