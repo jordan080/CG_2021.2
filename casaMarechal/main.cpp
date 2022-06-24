@@ -47,6 +47,13 @@ GLfloat posLuz5[4] = {-4, 153.3, -405, 1};	// direcao da fonte de luz
 GLfloat luzDif6[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
 GLfloat posLuz6[4] = {-4, 153.3, -402, 1};	// direcao da fonte de luz
 
+//Luz de Frente
+GLfloat luzAmbSpot[4]= {0.2, 0.2, 0.2, 1.0};
+GLfloat luzDifSpot[4] = {3, 3, 3, 1};
+GLfloat luzEspSpot[4] = {0, 0, 0, 1};
+GLfloat posLuzSpot[4] = {13.8,153.2,-405.2, 1};
+GLfloat dirLuzSpot[3] = {0, -1, 0};
+
 bool luzes[6] = {true, true, true, true, true, true};
 
 GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
@@ -118,6 +125,14 @@ void CriaObjetos(void)
 	glRotated(90,1,0,0);
 	glRotated(5,0,1,0);
 	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	// Lampada de Parede
+	glPushMatrix();
+	glTranslatef(13.5,152.5,-405.2);
+	glScalef(5,5,5);
+	glRotated(180,0,1,0);
+	DesenhaObjeto(lampada_parede);
 	glPopMatrix();
 
 	// Porta
@@ -247,6 +262,13 @@ void Desenha(void)
 	glLightfv(GL_LIGHT3, GL_POSITION, posLuz4);
 	glLightfv(GL_LIGHT4, GL_POSITION, posLuz5);
 	glLightfv(GL_LIGHT5, GL_POSITION, posLuz6);
+
+	glLightfv(GL_LIGHT6, GL_POSITION, posLuzSpot);
+	glLightfv(GL_LIGHT6, GL_DIFFUSE, luzDifSpot);
+	glLightfv(GL_LIGHT6, GL_SPECULAR, luzEspSpot);
+	glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, dirLuzSpot);
+	glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 45.0);
+	glLightf(GL_LIGHT6, GL_SPOT_EXPONENT, 7);
 
 	// Desenha todos os elementos da cena
 	CriaObjetos();
@@ -461,6 +483,7 @@ void Inicializa(void)
 	glEnable(GL_LIGHT3);
 	glEnable(GL_LIGHT4);
 	glEnable(GL_LIGHT5);
+	glEnable(GL_LIGHT6);
 	glEnable(GL_LIGHTING);
 
 	// Define coeficientes ambiente e difuso
@@ -495,7 +518,7 @@ void Inicializa(void)
 	porta = CarregaObjeto("obj/porta.obj", false);
 	janela = CarregaObjeto("obj/porta.obj", false);
 	lampada = CarregaObjeto("obj/lampada.obj", false);
-	//lampada_parede = CarregaObjeto("obj/lampada_parede.obj", false);
+	lampada_parede = CarregaObjeto("obj/lampada_parede.obj", false);
 }
 
 // Programa Principal
