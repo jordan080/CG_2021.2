@@ -16,7 +16,46 @@ GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
 OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira;
-OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador;
+OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede;
+
+// Luminosidade base de uma lampada
+#define LOW	0.3
+
+// Define parametros de iluminacao
+// Luz 1
+GLfloat luzAmb1[4] = {0.01, 0.01, 0.01, 1.0};	// luz ambiente
+GLfloat luzDif1[4] = {LOW, LOW, LOW, 1.0};		// luz difusa
+GLfloat luzEsp1[4] = {0.01, 0.01, 0.01, 1.0};	// luz especular
+GLfloat posLuz1[4] = {6.8, 153.3, -402, 1.0};	// posicao da fonte de luz
+
+// Luz 2
+GLfloat luzDif2[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz2[4] = {6.8, 153.3, -405, 1};	// posicao da fonte de luz
+
+// Luz 3
+GLfloat luzDif3[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz3[4] = {6.8, 153.3, -408, 1};	// posicao da fonte de luz
+
+// Luz 4
+GLfloat luzDif4[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz4[4] = {-4, 153.3, -408, 1};	// direcao da fonte de luz
+
+// Luz 5
+GLfloat luzDif5[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz5[4] = {-4, 153.3, -405, 1};	// direcao da fonte de luz
+
+// Luz 6
+GLfloat luzDif6[4] = {LOW, LOW, LOW, 1.0};	// luz difusa
+GLfloat posLuz6[4] = {-4, 153.3, -402, 1};	// direcao da fonte de luz
+
+//Luz de Frente
+GLfloat luzAmbSpot[4]= {0.2, 0.2, 0.2, 1.0};
+GLfloat luzDifSpot[4] = {3, 3, 3, 1};
+GLfloat luzEspSpot[4] = {0, 0, 0, 1};
+GLfloat posLuzSpot[4] = {13.8,153.2,-405.2, 1};
+GLfloat dirLuzSpot[3] = {0, -1, 0};
+
+bool luzes[6] = {true, true, true, true, true, true};
 
 GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
 GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
@@ -35,6 +74,68 @@ void CriaObjetos(void)
 	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
 	DesenhaObjeto(paredes);
+	glPopMatrix();
+
+	//Lampada 1
+	glPushMatrix();
+	glTranslatef(11.8,153.42,-402);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	glRotated(-5,0,1,0);
+	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	//Lampada 2
+	glPushMatrix();
+	glTranslatef(11.8,153.42,-405);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	glRotated(-5,0,1,0);
+	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	//Lampada 3
+	glPushMatrix();
+	glTranslatef(11.8,153.42,-408);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	glRotated(-5,0,1,0);
+	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	//Lampada 4
+	glPushMatrix();
+	glTranslatef(-5.8,153.65,-408);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	glRotated(5,0,1,0);
+	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	//Lampada 5
+	glPushMatrix();
+	glTranslatef(-5.8,153.65,-405);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	glRotated(5,0,1,0);
+	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	//Lampada 6
+	glPushMatrix();
+	glTranslatef(-5.8,153.65,-402);
+	glScalef(0.01,0.01,0.01);
+	glRotated(90,1,0,0);
+	glRotated(5,0,1,0);
+	DesenhaObjeto(lampada);
+	glPopMatrix();
+
+	// Lampada de Parede
+	glPushMatrix();
+	glTranslatef(13.5,152.5,-405.2);
+	glScalef(5,5,5);
+	glRotated(180,0,1,0);
+	DesenhaObjeto(lampada_parede);
 	glPopMatrix();
 
 	// Porta
@@ -248,6 +349,22 @@ void Desenha(void)
 
 	glEnable(GL_TEXTURE_2D);
 
+	// Agora posiciona a fonte de luz do meio da sala
+	// Agora posiciona demais fontes de luz
+	glLightfv(GL_LIGHT0, GL_POSITION, posLuz1);
+	glLightfv(GL_LIGHT1, GL_POSITION, posLuz2);
+	glLightfv(GL_LIGHT2, GL_POSITION, posLuz3);
+	glLightfv(GL_LIGHT3, GL_POSITION, posLuz4);
+	glLightfv(GL_LIGHT4, GL_POSITION, posLuz5);
+	glLightfv(GL_LIGHT5, GL_POSITION, posLuz6);
+
+	glLightfv(GL_LIGHT6, GL_POSITION, posLuzSpot);
+	glLightfv(GL_LIGHT6, GL_DIFFUSE, luzDifSpot);
+	glLightfv(GL_LIGHT6, GL_SPECULAR, luzEspSpot);
+	glLightfv(GL_LIGHT6, GL_SPOT_DIRECTION, dirLuzSpot);
+	glLightf(GL_LIGHT6, GL_SPOT_CUTOFF, 45.0);
+	glLightf(GL_LIGHT6, GL_SPOT_EXPONENT, 7);
+
 	// Desenha todos os elementos da cena
 	CriaObjetos();
 
@@ -285,6 +402,15 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 	fAspect = (GLfloat)w/(GLfloat)h;
 
 	EspecificaParametrosVisualizacao();
+}
+
+void SetaLuzes()
+{
+	for(int luz=0;luz<6;++luz)
+	{
+		if(luzes[luz]) glEnable(GL_LIGHT0+luz);
+		else glDisable(GL_LIGHT0+luz);
+	}
 }
 
 // Funcao callback para eventos de teclado
@@ -327,6 +453,15 @@ void Teclado(unsigned char key, int x, int y)
 			if(velocidade_vent >= 360){
 				velocidade_vent = 0;
 			}
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+					luzes[key-'1'] = !luzes[key-'1'];
+					SetaLuzes();
+					break;
 	}
 	// Na próxima iteração por meio de glutMainLoop essa janela será exibida novamente
 	glutPostRedisplay();
@@ -340,12 +475,12 @@ void TecladoEspecial(int key, int x, int y)
 	// de direcao atual + 90 graus, ou seja,
 	// a direcao para deslocamento lateral
 	sina = 0.5*sin((rotY+90)*M_PI/180.0);
-	cosa = 0.25*cos((rotY+90)*M_PI/180.0);
+	cosa = 0.20*cos((rotY+90)*M_PI/180.0);
 
 	// Pre-calcula o seno e cosseno do angulo
 	// sem os 90 graus
-	sina_01 = 0.25*sin(rotY*M_PI/180.0);
-	cosa_01 = 0.25*cos(rotY*M_PI/180.0);
+	sina_01 = 0.20*sin(rotY*M_PI/180.0);
+	cosa_01 = 0.20*cos(rotY*M_PI/180.0);
 
 	// Trata as teclas especiais
 	switch(key)
@@ -421,24 +556,76 @@ void Inicializa(void)
 	// Define a cor de fundo da janela de visualizacao como preto
 	glClearColor(0,0,0,1);	
 
+	// Ajusta iluminacao
+	glLightfv( GL_LIGHT0, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT0, GL_DIFFUSE,  luzDif1 );
+	glLightfv( GL_LIGHT0, GL_SPECULAR, luzEsp1 );
+
+	glLightfv( GL_LIGHT1, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT1, GL_DIFFUSE,  luzDif2 );
+
+	glLightfv( GL_LIGHT2, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT2, GL_DIFFUSE,  luzDif3 );
+
+	glLightfv( GL_LIGHT3, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT3, GL_DIFFUSE,  luzDif4 );
+
+	glLightfv( GL_LIGHT4, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT4, GL_DIFFUSE,  luzDif5 );
+
+	glLightfv( GL_LIGHT5, GL_AMBIENT,  luzAmb1 );
+	glLightfv( GL_LIGHT5, GL_DIFFUSE,  luzDif6 );
+	
+	// Habilita todas as fontes de luz
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	glEnable(GL_LIGHT3);
+	glEnable(GL_LIGHT4);
+	glEnable(GL_LIGHT5);
+	glEnable(GL_LIGHT6);
+	glEnable(GL_LIGHTING);
+
+	// Define coeficientes ambiente e difuso
+	// do material
+	GLfloat matAmb[4] = { 0.15,0.15,0.15,1 };
+	GLfloat matDif[4] = { 0.5,0.5,0.5,0.5 };
+
+	// Material
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,matAmb);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,matDif);
+
+	// Seleciona o modo de GL_COLOR_MATERIAL
+	// faz com que uma cor de material acompanhe a cor atual
+	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+	
+	// Habilita normalizacao automatica
+	// Vetores normais sao normalizados para valores unitarios
+	// apos transformacao e antes da iluminacao
+	glEnable(GL_NORMALIZE);
+
 	// Habilita Z-Buffer
 	// Realiza comparacoes de profundidade
 	// e atualiza o buffer de profundidade
 	glEnable(GL_DEPTH_TEST);
 
 	// Carrega objetos
-	paredes = CarregaObjeto("obj/paredes.obj", false);
+	paredes = CarregaObjeto("obj/versao_final2.obj", false);
 	mesa = CarregaObjeto("obj/mesa.obj", false);
 	cadeira = CarregaObjeto("obj/cadeira.obj", false);
 	cama = CarregaObjeto("obj/cama.obj", false);
 	porta = CarregaObjeto("obj/porta.obj", false);
 	janela = CarregaObjeto("obj/porta.obj", false);
+
 	banco = CarregaObjeto("obj/oldbench1.obj", false);
 	mesa_cabeceira = CarregaObjeto("obj/mesa_cabeceira.obj", false);
 	mesa_grande = CarregaObjeto("obj/mesa_grande.obj", false);
 	enfeite_janela = CarregaObjeto("obj/enfeite_janela.obj", false);
 	meio_ventilador = CarregaObjeto("obj/meio.obj", false);
 	helice_ventilador = CarregaObjeto("obj/helice.obj", false);
+	lampada = CarregaObjeto("obj/lampada.obj", false);
+	lampada_parede = CarregaObjeto("obj/lampada_parede.obj", false);
 }
 
 // Programa Principal
