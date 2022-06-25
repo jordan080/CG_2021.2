@@ -159,7 +159,6 @@ void CriaObjetos(void)
 	//mesa de cabeceira
 	glPushMatrix();
 	glTranslatef(-1.3,149.7,-400.4);
-	//glRotatef(180,0,1,0);
 	glScalef(0.3,0.3,0.3);
 	DesenhaObjeto(mesa_cabeceira);
 	glPopMatrix();
