@@ -16,7 +16,7 @@ GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
 OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira;
-OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede;
+OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede, *mesinha;
 
 // Luminosidade base de uma lampada
 #define LOW	0.3
@@ -196,46 +196,46 @@ void CriaObjetos(void)
 	glPopMatrix();
 
 	// glPushMatrix();
-	// glTranslatef(5.1,149.7,-409.2);
+	// glTranslatef(5.1,149.8,-409.2);
 	// glRotatef(180,0,1,0);
 	// DesenhaObjeto(cadeira);
 	// glPopMatrix();
 	//Cadeira 1
 	glPushMatrix();
-	glTranslatef(5.5,149.7,-407);
+	glTranslatef(5.5,149.8,-407);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 1.1
 	glPushMatrix();
-	glTranslatef(4.5,149.7,-407);
+	glTranslatef(4.5,149.8,-407);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 2
 	glPushMatrix();
-	glTranslatef(6.5,149.7,-408);
+	glTranslatef(6.5,149.8,-408);
 	glRotatef(90,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 2.1
 	glPushMatrix();
-	glTranslatef(6.5,149.7,-408.8);
+	glTranslatef(6.5,149.8,-408.8);
 	glRotatef(90,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 3
 	glPushMatrix();
-	glTranslatef(3.6,149.7,-408);
+	glTranslatef(3.6,149.8,-408);
 	glRotatef(270,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 3.1
 	glPushMatrix();
-	glTranslatef(3.6,149.7,-408.8);
+	glTranslatef(3.6,149.8,-408.8);
 	glRotatef(270,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
@@ -243,7 +243,7 @@ void CriaObjetos(void)
 
 	// Cama
 	glPushMatrix();
-	glTranslatef(-3,149.7,-401.5);
+	glTranslatef(-3,149.8,-401.5);
 	glRotatef(180,0,1,0);
 	glScalef(0.015,0.015,0.015);
 	DesenhaObjeto(cama);
@@ -251,7 +251,7 @@ void CriaObjetos(void)
 
 	// Cama 2
 	glPushMatrix();
-	glTranslatef(0.3,149.7,-401.5);
+	glTranslatef(0.3,149.8,-401.5);
 	glRotatef(180,0,1,0);
 	glScalef(0.015,0.015,0.015);
 	DesenhaObjeto(cama);
@@ -259,37 +259,38 @@ void CriaObjetos(void)
 
 	//mesa de cabeceira
 	glPushMatrix();
-	glTranslatef(-1.3,149.7,-400.4);
-	glScalef(0.3,0.3,0.3);
+	glTranslatef(-1.3,150.05,-400.4);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.12,0.12,0.12);
 	DesenhaObjeto(mesa_cabeceira);
 	glPopMatrix();
 
 	// banco
 	glPushMatrix();
-	glTranslatef(5.1,149.7,-410);
+	glTranslatef(5.1,149.8,-410);
 	glRotatef(180,0,1,0);
 	DesenhaObjeto(banco);
 	glPopMatrix();
 
 	//mesinha 1
 	glPushMatrix();
-	glTranslatef(7.2,149.7,-410);
+	glTranslatef(7.2,150.05,-410.2);
 	glRotatef(180,0,1,0);
 	glScalef(0.3,0.3,0.3);
-	DesenhaObjeto(mesa_cabeceira);
+	DesenhaObjeto(mesinha);
 	glPopMatrix();
 
 	//mesinha 2
 	glPushMatrix();
-	glTranslatef(3.0,149.7,-410);
+	glTranslatef(3.0,150.05,-410.2);
 	glRotatef(180,0,1,0);
 	glScalef(0.3,0.3,0.3);
-	DesenhaObjeto(mesa_cabeceira);
+	DesenhaObjeto(mesinha);
 	glPopMatrix();
 
 	// mesa grande
 	glPushMatrix();
-	glTranslatef(-2.8,149.7,-407.8);
+	glTranslatef(-2.8,149.8,-407.8);
 	glRotatef(90,0,1,0);
 	glScalef(0.16,0.16,0.16);
 	DesenhaObjeto(mesa_grande);
@@ -297,14 +298,14 @@ void CriaObjetos(void)
 
 	// Cadeira 4
 	glPushMatrix();
-	glTranslatef(-2.8,149.7,-408.8);
+	glTranslatef(-2.8,149.8,-408.8);
 	glRotatef(180,0,1,0);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
 	// Cadeira 4.1
 	glPushMatrix();
-	glTranslatef(-2.8,149.7,-406.8);
+	glTranslatef(-2.8,149.8,-406.8);
 	DesenhaObjeto(cadeira);
 	glPopMatrix();
 
@@ -316,14 +317,14 @@ void CriaObjetos(void)
 
 	//meio do ventilador
 	glPushMatrix();
-	glTranslatef(-2.8,151.7,-408.8);
+	glTranslatef(2.6,154.2,-405.8);
 	glScalef(0.4,0.4,0.4);
 	DesenhaObjeto(meio_ventilador);
 	glPopMatrix();
 
 	//helice do ventilador
 	glPushMatrix();
-	glTranslatef(-2.8,151.7,-408.8);
+	glTranslatef(2.6,154.2,-405.8);
 	glRotatef(velocidade_vent,0,1,0);
 	glScalef(0.4,0.4,0.4);
 	DesenhaObjeto(helice_ventilador);
@@ -370,6 +371,18 @@ void Desenha(void)
 
 	// Faz a troca dos buffers
 	glutSwapBuffers();
+}
+
+//funcao para animar o ventilador
+void ventilador_animacao(int x){
+	velocidade_vent += 10;
+		
+	if(velocidade_vent >= 360){
+		velocidade_vent = 0;
+	}
+
+	glutPostRedisplay();
+	glutTimerFunc(50,ventilador_animacao, 1);
 }
 
 // Funcao usada para especificar o volume de visualizacao
@@ -448,11 +461,13 @@ void Teclado(unsigned char key, int x, int y)
 						z_window_angle = z_window_angle - 0.035;
 					}
 					break;
-		case 'v':
-			velocidade_vent += 10;
-			if(velocidade_vent >= 360){
-				velocidade_vent = 0;
-			}
+		// case 'v':
+		// 	velocidade_vent += 10;
+		
+		// 	if(velocidade_vent >= 360){
+		// 		velocidade_vent = 0;
+		// 	}
+		// 	break;
 		case '1':
 		case '2':
 		case '3':
@@ -611,7 +626,7 @@ void Inicializa(void)
 	glEnable(GL_DEPTH_TEST);
 
 	// Carrega objetos
-	paredes = CarregaObjeto("obj/versao_final2.obj", false);
+	paredes = CarregaObjeto("obj/versao_final3.obj", false);
 	mesa = CarregaObjeto("obj/mesa.obj", false);
 	cadeira = CarregaObjeto("obj/cadeira.obj", false);
 	cama = CarregaObjeto("obj/cama.obj", false);
@@ -621,6 +636,7 @@ void Inicializa(void)
 	banco = CarregaObjeto("obj/oldbench1.obj", false);
 	mesa_cabeceira = CarregaObjeto("obj/mesa_cabeceira.obj", false);
 	mesa_grande = CarregaObjeto("obj/mesa_grande.obj", false);
+	mesinha = CarregaObjeto("obj/mesinha.obj", false);
 	enfeite_janela = CarregaObjeto("obj/enfeite_janela.obj", false);
 	meio_ventilador = CarregaObjeto("obj/meio.obj", false);
 	helice_ventilador = CarregaObjeto("obj/helice.obj", false);
@@ -661,6 +677,9 @@ int main(int argc, char** argv)
 
 	// Registra a funcao callback para eventos de movimento do mouse
 	glutMotionFunc(GerenciaMovim);
+
+	//anima o ventilador
+	glutTimerFunc(60,ventilador_animacao, 1);
 
 	// Registra a funcao callback de redimensionamento da janela de visualizacao
 	glutReshapeFunc(AlteraTamanhoJanela);
