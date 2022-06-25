@@ -16,11 +16,13 @@ GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
 OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira;
-OBJnotex *mesa_grande, *enfeite_janela;
+OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador;
 
 GLfloat rotX=1, rotY=-90, rotX_ini, rotY_ini;
 GLfloat obsX=21.3, obsY=151.5, obsZ=-405.5, obsY_ini;
 int x_ini,y_ini,bot;
+
+GLfloat velocidade_vent = 0;
 
 // Variaveis para controle da projecao
 GLfloat fAspect;
@@ -212,6 +214,21 @@ void CriaObjetos(void)
 	DesenhaObjeto(enfeite_janela);
 	glPopMatrix();
 
+	//meio do ventilador
+	glPushMatrix();
+	glTranslatef(-2.8,151.7,-408.8);
+	glScalef(0.4,0.4,0.4);
+	DesenhaObjeto(meio_ventilador);
+	glPopMatrix();
+
+	//helice do ventilador
+	glPushMatrix();
+	glTranslatef(-2.8,151.7,-408.8);
+	glRotatef(velocidade_vent,0,1,0);
+	glScalef(0.4,0.4,0.4);
+	DesenhaObjeto(helice_ventilador);
+	glPopMatrix();
+
 }
 
 // Desenha toda a cena
@@ -306,6 +323,11 @@ void Teclado(unsigned char key, int x, int y)
 						z_window_angle = z_window_angle - 0.035;
 					}
 					break;
+		case 'v':
+			velocidade_vent += 10;
+			if(velocidade_vent >= 360){
+				velocidade_vent = 0;
+			}
 	}
 	// Na próxima iteração por meio de glutMainLoop essa janela será exibida novamente
 	glutPostRedisplay();
@@ -416,6 +438,8 @@ void Inicializa(void)
 	mesa_cabeceira = CarregaObjeto("obj/mesa_cabeceira.obj", false);
 	mesa_grande = CarregaObjeto("obj/mesa_grande.obj", false);
 	enfeite_janela = CarregaObjeto("obj/enfeite_janela.obj", false);
+	meio_ventilador = CarregaObjeto("obj/meio.obj", false);
+	helice_ventilador = CarregaObjeto("obj/helice.obj", false);
 }
 
 // Programa Principal
