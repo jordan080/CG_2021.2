@@ -653,7 +653,7 @@ void Inicializa(void)
 	mesa = CarregaObjeto("obj/mesa.obj", false);
 	cadeira = CarregaObjeto("obj/cadeira.obj", false);
 	cama = CarregaObjeto("obj/cama.obj", false);
-	porta = CarregaObjeto("obj/porta.obj", false);
+	porta = CarregaObjeto("obj/porta_azul.obj", false);
 	janela = CarregaObjeto("obj/porta.obj", false);
 
 	banco = CarregaObjeto("obj/oldbench1.obj", false);
