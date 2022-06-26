@@ -15,7 +15,7 @@
 GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
-OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira;
+OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira, *estante, *banco_grande;
 OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede, *mesinha;
 
 // Luminosidade base de uma lampada
@@ -330,6 +330,29 @@ void CriaObjetos(void)
 	DesenhaObjeto(helice_ventilador);
 	glPopMatrix();
 
+	//estante
+	glPushMatrix();
+	glTranslatef(-7.4,149.8,-408.1);
+	glRotatef(90,0,1,0);
+	DesenhaObjeto(estante);
+	glPopMatrix();
+
+	//banco grande 1
+	glPushMatrix();
+	glTranslatef(-4.0,149.8,-407.5);
+	glRotatef(90,0,1,0);
+	glScalef(0.2, 0.2, 0.2);
+	DesenhaObjeto(banco_grande);
+	glPopMatrix();
+
+	//banco grande 2
+	glPushMatrix();
+	glTranslatef(-1.8,149.8,-407.5);
+	glRotatef(90,0,1,0);
+	glScalef(0.2, 0.2, 0.2);
+	DesenhaObjeto(banco_grande);
+	glPopMatrix();
+
 }
 
 // Desenha toda a cena
@@ -642,6 +665,8 @@ void Inicializa(void)
 	helice_ventilador = CarregaObjeto("obj/helice.obj", false);
 	lampada = CarregaObjeto("obj/lampada.obj", false);
 	lampada_parede = CarregaObjeto("obj/lampada_parede.obj", false);
+	estante = CarregaObjeto("obj/estante.obj", false);
+	banco_grande = CarregaObjeto("obj/banco_grande.obj", false);
 }
 
 // Programa Principal
