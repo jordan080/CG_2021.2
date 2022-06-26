@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 
+extern "C" {
+	#include <jpeglib.h>
+}
+
 #ifndef M_PI
 #define M_PI 3.1415926
 #endif
@@ -13,7 +17,8 @@ typedef struct
 	char nome[50];			
 	int ncomp;				
 	GLint dimx;				
-	GLint dimy;						
+	GLint dimy;				
+	GLuint texid;			
 	unsigned char *data;	
 } TEXnotex;
 
@@ -24,8 +29,10 @@ typedef struct {
 typedef struct {
 	GLint nv;		
 	GLint *vert;	
-	GLint *norm;		
+	GLint *norm;	
+	GLint *tex;		
 	GLint mat;		
+	GLint texid;	
 } FACEnotex;
 
 typedef struct {
@@ -38,7 +45,8 @@ typedef struct {
 	GLint numNormais;
 	GLint numTexcoords;
 	bool normais_por_vertice;	
-	bool tem_materiais;						
+	bool tem_materiais;			
+	GLint textura;				
 	GLint dlist;				
 	VERTnotex *vertices;
 	VERTnotex *normais;
@@ -56,8 +64,32 @@ typedef struct {
 	GLfloat spec;	
 } MATnotex;
 
+
+void NormalizaNoTex(VERTnotex &norm);
+void ProdutoVetorialNoTex(VERTnotex &v1, VERTnotex &v2, VERTnotex &vresult);
+void VetorNormalNoTex(VERTnotex vert1, VERTnotex vert2, VERTnotex vert3, VERTnotex &n);
+void RotaZNoTex(VERTnotex &in, VERTnotex &out, float ang);
+void RotaYNoTex(VERTnotex &in, VERTnotex &out, float ang);
+void RotaXNoTex(VERTnotex &in, VERTnotex &out, float ang);
+
 OBJnotex *CarregaObjeto(char *nomeArquivo, bool mipmap);
+void CriaDisplayListNoTex(OBJnotex *obj);
+void DesabilitaDisplayListNoTex(OBJnotex *ptr);
 void DesenhaObjeto(OBJnotex *obj);
+void SetaModoDesenhoNoTex(char modo);
+
+void LiberaObjetoNoTex(OBJnotex *obj);
+void LiberaMateriaisNoTex();
+
+float CalculaQPSNoTex(void);
+void Escreve2DNoTex(float x, float y, char *str);
+
+void CalculaNormaisPorFaceNoTex(OBJnotex *obj);
+
+TEXnotex *CarregaTextura(char *arquivo, bool mipmap);
+void SetaFiltroTexturaNoTex(GLint tex, GLint filtromin, GLint filtromag);
+MATnotex *ProcuraMaterialNoTex(char *nome);
+TEXnotex *CarregaJPG(const char *filename, bool inverte=true);
 
 #ifndef GL_ARB_texture_cube_map
 # define GL_NORMAL_MAP					0x8511
