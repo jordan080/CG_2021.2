@@ -16,7 +16,7 @@ GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
 OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira, *estante, *banco_grande;
-OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede, *mesinha;
+OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede, *mesinha, *chao;
 
 // Luminosidade base de uma lampada
 #define LOW	0.3
@@ -74,6 +74,13 @@ void CriaObjetos(void)
 	glColor3ub(211,211,211);
 	glTranslatef(0,150,-400);
 	DesenhaObjeto(paredes);
+	glPopMatrix();
+
+	// chao
+	glPushMatrix();
+	glColor3ub(211,211,211);
+	glTranslatef(0,150,-400);
+	DesenhaObjeto(chao);
 	glPopMatrix();
 
 	//Lampada 1
@@ -649,7 +656,7 @@ void Inicializa(void)
 	glEnable(GL_DEPTH_TEST);
 
 	// Carrega objetos
-	paredes = CarregaObjeto("obj/versao_final3.obj", false);
+	paredes = CarregaObjeto("obj/versao_final4.obj", false);
 	mesa = CarregaObjeto("obj/mesa.obj", false);
 	cadeira = CarregaObjeto("obj/cadeira.obj", false);
 	cama = CarregaObjeto("obj/cama.obj", false);
@@ -667,6 +674,7 @@ void Inicializa(void)
 	lampada_parede = CarregaObjeto("obj/lampada_parede.obj", false);
 	estante = CarregaObjeto("obj/estante.obj", false);
 	banco_grande = CarregaObjeto("obj/banco_grande.obj", false);
+	chao = CarregaObjeto("obj/chao.obj", false);
 }
 
 // Programa Principal
