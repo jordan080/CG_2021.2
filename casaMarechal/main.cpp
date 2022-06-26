@@ -637,7 +637,7 @@ void Inicializa(void)
 	mesa_cabeceira = CarregaObjeto("obj/mesa_cabeceira.obj", false);
 	mesa_grande = CarregaObjeto("obj/mesa_grande.obj", false);
 	mesinha = CarregaObjeto("obj/mesinha.obj", false);
-	enfeite_janela = CarregaObjeto("obj/enfeite_janela.obj", false);
+	enfeite_janela = CarregaObjeto("obj/enfeite_janela2.obj", false);
 	meio_ventilador = CarregaObjeto("obj/meio.obj", false);
 	helice_ventilador = CarregaObjeto("obj/helice.obj", false);
 	lampada = CarregaObjeto("obj/lampada.obj", false);
