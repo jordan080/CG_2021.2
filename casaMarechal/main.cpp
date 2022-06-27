@@ -7,7 +7,7 @@
 #include "utils.h"
 
 TEXnotex *cadeiraTex, *paredesTex, *camaTex, *chaoTex, *enfeitejanTex, *heliceTex, *estanteTex, *mesa_cabeceiraTex, *mesa_grandeTex, *mesinhaTex;
-TEXnotex *portaTex, *banco_grandeTex, *bancoTex;
+TEXnotex *portaTex, *banco_grandeTex, *bancoTex, *meio_ventiladorTex;
 
 // Filtros de textura
 GLint filtros[] = {
@@ -332,6 +332,7 @@ void CriaObjetos(void)
 	glTranslatef(7.2,150.05,-410.2);
 	glRotatef(180,0,1,0);
 	glScalef(0.3,0.3,0.3);
+	mesinha -> textura = mesinhaTex -> texid;
 	DesenhaObjeto(mesinha);
 	glPopMatrix();
 
@@ -376,6 +377,7 @@ void CriaObjetos(void)
 	glPushMatrix();
 	glTranslatef(2.6,154.2,-405.8);
 	glScalef(0.4,0.4,0.4);
+	meio_ventilador -> textura = meio_ventiladorTex -> texid;
 	DesenhaObjeto(meio_ventilador);
 	glPopMatrix();
 
@@ -662,6 +664,7 @@ void Inicializa(void)
 	portaTex = CarregaTextura("texturas/porta_azul.jpg", true);
 	banco_grandeTex = CarregaTextura("texturas/banco_grande.jpg", true);
 	bancoTex = CarregaTextura("texturas/banco.jpg", true);
+	meio_ventiladorTex = CarregaTextura("texturas/ventilador_meio.jpg", true);
 
 	// Seleciona o modo de aplicacao da textura
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, modo);
