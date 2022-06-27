@@ -7,7 +7,7 @@
 #include "utils.h"
 
 TEXnotex *cadeiraTex, *paredesTex, *camaTex, *chaoTex, *enfeitejanTex, *heliceTex, *estanteTex, *mesa_cabeceiraTex, *mesa_grandeTex, *mesinhaTex;
-TEXnotex *portaTex, *banco_grandeTex, *bancoTex, *meio_ventiladorTex;
+TEXnotex *portaTex, *banco_grandeTex, *bancoTex, *meio_ventiladorTex, *pri_andarTex, *escadaTex, *janelaTex;
 
 // Filtros de textura
 GLint filtros[] = {
@@ -41,8 +41,8 @@ void SetaEscalaTextura(float x,float y)
 GLfloat x_trans_angle = 0, z_trans_angle = 0, angle_door = 0;
 GLfloat x_window_angle = 0, z_window_angle = 0, angle_window = 0;
 
-OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira, *estante, *banco_grande;
-OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede, *mesinha, *chao;
+OBJnotex *paredes, *mesa, *cadeira, *cama, *porta, *telhado, *janela, *banco, *mesa_cabeceira, *estante, *banco_grande, *escada;
+OBJnotex *mesa_grande, *enfeite_janela, *meio_ventilador, *helice_ventilador, *lampada, *lampada_parede, *mesinha, *chao, *divisoria, *pri_andar;
 
 // Luminosidade base de uma lampada
 #define LOW	0.3
@@ -205,6 +205,7 @@ void CriaObjetos(void)
 	glScalef(0.65,0.58,0.65);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
+	janela -> textura = janelaTex -> texid;
 	DesenhaObjeto(janela);
 	glPopMatrix();
 
@@ -215,6 +216,7 @@ void CriaObjetos(void)
 	glScalef(0.65,0.58,0.65);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
+	janela -> textura = janelaTex -> texid;
 	DesenhaObjeto(janela);
 	glPopMatrix();
 
@@ -225,6 +227,7 @@ void CriaObjetos(void)
 	glScalef(0.65,0.58,0.69);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
+	janela -> textura = janelaTex -> texid;
 	DesenhaObjeto(janela);
 	glPopMatrix();
 
@@ -235,6 +238,7 @@ void CriaObjetos(void)
 	glScalef(0.65,0.58,0.69);
 	glRotated(-angle_window,0,1,0);
 	glTranslatef(x_window_angle,0,z_window_angle);
+	janela -> textura = janelaTex -> texid;
 	DesenhaObjeto(janela);
 	glPopMatrix();
 
@@ -373,17 +377,35 @@ void CriaObjetos(void)
 	DesenhaObjeto(enfeite_janela);
 	glPopMatrix();
 
-	//meio do ventilador
+	//meio do ventilador 1 
 	glPushMatrix();
-	glTranslatef(2.6,154.2,-405.8);
+	glTranslatef(2.6,154.2,-401.8);
 	glScalef(0.4,0.4,0.4);
 	meio_ventilador -> textura = meio_ventiladorTex -> texid;
 	DesenhaObjeto(meio_ventilador);
 	glPopMatrix();
 
-	//helice do ventilador
+	//helice do ventilador 1
 	glPushMatrix();
-	glTranslatef(2.6,154.2,-405.8);
+	glTranslatef(2.6,154.2,-401.8);
+	glRotatef(velocidade_vent,0,1,0);
+	glScalef(0.4,0.4,0.4);
+	helice_ventilador -> textura = heliceTex -> texid;
+	DesenhaObjeto(helice_ventilador);
+	glPopMatrix();
+
+
+	//meio do ventilador 2
+	glPushMatrix();
+	glTranslatef(2.6,154.2,-408.8);
+	glScalef(0.4,0.4,0.4);
+	meio_ventilador -> textura = meio_ventiladorTex -> texid;
+	DesenhaObjeto(meio_ventilador);
+	glPopMatrix();
+
+	//helice do ventilador 2
+	glPushMatrix();
+	glTranslatef(2.6,154.2,-408.8);
 	glRotatef(velocidade_vent,0,1,0);
 	glScalef(0.4,0.4,0.4);
 	helice_ventilador -> textura = heliceTex -> texid;
@@ -394,7 +416,8 @@ void CriaObjetos(void)
 	glPushMatrix();
 	glTranslatef(-7.4,149.8,-408.1);
 	glRotatef(90,0,1,0);
-	estante -> textura = estanteTex -> texid;
+	glScalef(1.2,1.2,1.2);
+	estante -> textura = mesa_grandeTex -> texid;
 	DesenhaObjeto(estante);
 	glPopMatrix();
 
@@ -413,6 +436,27 @@ void CriaObjetos(void)
 	glRotatef(90,0,1,0);
 	glScalef(0.2, 0.2, 0.2);
 	DesenhaObjeto(banco_grande);
+	glPopMatrix();
+
+	// escada
+	glPushMatrix();
+	glTranslatef(-3.2,149.8,-405.0);
+	glScalef(0.4, 0.42, 0.3);
+	escada -> textura = paredesTex -> texid;
+	DesenhaObjeto(escada);
+	glPopMatrix();
+
+	//divisorias
+	glPushMatrix();
+	glTranslatef(0,150,-400);
+	divisoria -> textura = paredesTex -> texid;
+	DesenhaObjeto(divisoria);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0,150,-400);
+	pri_andar -> textura = pri_andarTex -> texid;
+	DesenhaObjeto(pri_andar);
 	glPopMatrix();
 }
 
@@ -665,6 +709,9 @@ void Inicializa(void)
 	banco_grandeTex = CarregaTextura("texturas/banco_grande.jpg", true);
 	bancoTex = CarregaTextura("texturas/banco.jpg", true);
 	meio_ventiladorTex = CarregaTextura("texturas/ventilador_meio.jpg", true);
+	pri_andarTex = CarregaTextura("texturas/piso_pri_andar.jpg", true);
+	escadaTex = CarregaTextura("texturas/escada.jpg", true);
+	janelaTex = CarregaTextura("texturas/janela.jpg", true);
 
 	// Seleciona o modo de aplicacao da textura
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, modo);
@@ -747,6 +794,9 @@ void Inicializa(void)
 	estante = CarregaObjeto("obj/estante.obj", false);
 	banco_grande = CarregaObjeto("obj/banco_grande.obj", false);
 	chao = CarregaObjeto("obj/chao.obj", false);
+	escada = CarregaObjeto("obj/escada_teste.obj", false);
+	divisoria = CarregaObjeto("obj/divisoria.obj", false);
+	pri_andar = CarregaObjeto("obj/primeiro_andar.obj", false);
 }
 
 // Programa Principal
